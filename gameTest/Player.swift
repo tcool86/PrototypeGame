@@ -19,7 +19,7 @@ enum FlightDirection : String {
 
 class Player : SKSpriteNode {
 
-    var flightSpeed : CGFloat = 50.0
+    var flightSpeed : CGFloat = 150.0
     var energy : CGFloat = 20.0
     var consumptionRate : CGFloat = 0.5
 
@@ -37,32 +37,32 @@ class Player : SKSpriteNode {
         default:
             fly = self.idle()
         }
-        fly.timingMode = .easeOut
+        fly.timingMode = .easeInEaseOut
         self.run(fly)
     }
 
     func idle() -> SKAction {
-        let fly : SKAction = SKAction.moveBy(x: 0, y: 0, duration: 0.2)
+        let fly : SKAction = SKAction.moveBy(x: 0, y: 0, duration: 0.5)
         return fly
     }
 
     func flyUp() -> SKAction {
-        let fly : SKAction = SKAction.moveBy(x: 0, y: flightSpeed, duration: 0.2)
+        let fly : SKAction = SKAction.moveBy(x: 0, y: flightSpeed, duration: 0.5)
         return fly
     }
 
     func flyDown() -> SKAction {
-        let fly : SKAction = SKAction.moveBy(x: 0, y: -flightSpeed, duration: 0.2)
+        let fly : SKAction = SKAction.moveBy(x: 0, y: -flightSpeed, duration: 0.5)
         return fly
     }
 
     func flyLeft() -> SKAction {
-        let fly : SKAction = SKAction.moveBy(x: -flightSpeed, y: 0, duration: 0.2)
+        let fly : SKAction = SKAction.moveBy(x: -flightSpeed, y: 0, duration: 0.5)
         return fly
     }
 
     func flyRight() -> SKAction {
-        let fly : SKAction = SKAction.moveBy(x: flightSpeed, y: 0, duration: 0.2)
+        let fly : SKAction = SKAction.moveBy(x: flightSpeed, y: 0, duration: 0.5)
         return fly
     }
 
