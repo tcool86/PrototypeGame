@@ -25,6 +25,7 @@ class GameScene: SKScene {
     private var lastUpdateTime : TimeInterval = 0
     private var player : Player?
     private var playerBase : Base?
+    private var interactionTime : TimeInterval = 0
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
@@ -34,7 +35,7 @@ class GameScene: SKScene {
 
         self.playerBase = Base.init()
         self.playerBase?.createBase(baseHealth: 50)
-        self.playerBase?.position = CGPoint(x: 200, y: 300)
+        self.playerBase?.position = CGPoint(x: 100, y: 0)
         self.addChild(self.playerBase!)
     }
     
@@ -89,7 +90,30 @@ class GameScene: SKScene {
         for entity in self.entities {
             entity.update(deltaTime: dt)
         }
+        handleBasePlayer(dt)
         
         self.lastUpdateTime = currentTime
+    }
+    
+    func handleBasePlayer(_ currentTime: TimeInterval) {
+        let playerPosition : CGPoint = (player?.position)!
+        let basePosition : CGPoint = (playerBase?.position)!
+        let baseSize : CGSize = CGSize(width: 300, height: 300)
+        let baseHitBox : CGRect = CGRect(x: basePosition.x - baseSize.width/2,
+                                         y: basePosition.y - baseSize.height/2,
+                                         width: baseSize.width,
+                                         height: baseSize.height)
+        
+        if (baseHitBox.contains(playerPosition)) {
+            interactionTime += currentTime
+            let distance = hypotf(Float(playerPosition.x - basePosition.x),
+                                  Float(playerPosition.y - basePosition.y))
+            let timeDiff = (distance/100) + 0.1
+            if (interactionTime > TimeInterval(timeDiff)) {
+                print("Distance \(distance)")
+                playerBase?.reduceBaseHealth(amount: 1)
+                interactionTime = 0
+            }
+        }
     }
 }
