@@ -21,6 +21,7 @@ class GameScene: SKScene {
     
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
+    var gameCamera : SKCameraNode = SKCameraNode()
     
     private var lastUpdateTime : TimeInterval = 0
     private var player : Player?
@@ -37,6 +38,11 @@ class GameScene: SKScene {
         self.playerBase?.createBase(baseHealth: 50)
         self.playerBase?.position = CGPoint(x: 100, y: 0)
         self.addChild(self.playerBase!)
+    
+        self.gameCamera.contains(self.player!)
+        self.camera = self.gameCamera
+        self.gameCamera.position = player!.position
+        self.addChild(self.gameCamera)
     }
     
     func touchDown(atPoint pos : CGPoint) {}
@@ -91,6 +97,7 @@ class GameScene: SKScene {
             entity.update(deltaTime: dt)
         }
         handleBasePlayer(dt)
+        self.gameCamera.position = player!.position
         
         self.lastUpdateTime = currentTime
     }
@@ -108,7 +115,7 @@ class GameScene: SKScene {
             interactionTime += currentTime
             let distance = hypotf(Float(playerPosition.x - basePosition.x),
                                   Float(playerPosition.y - basePosition.y))
-            let timeDiff = (distance/100) + 0.1
+            let timeDiff = (distance/100) + 0.02
             if (interactionTime > TimeInterval(timeDiff)) {
                 print("Distance \(distance)")
                 playerBase?.reduceBaseHealth(amount: 1)
