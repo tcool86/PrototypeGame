@@ -23,13 +23,11 @@ class ViewController: NSViewController {
             // Present the scene
             if let view = self.skView {
                 view.presentScene(scene)
-                scene.sceneDidLoad()
                 
                 view.ignoresSiblingOrder = true
                 
                 view.showsFPS = true
                 view.showsNodeCount = true
-
             }
         }
     }

@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import Foundation
 
 enum KeyPressed : UInt16 {
     case up    = 126
@@ -22,12 +23,13 @@ class GameScene: SKScene {
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     var gameCamera : SKCameraNode = SKCameraNode()
+    var stars = [Star]()
     
     private var lastUpdateTime : TimeInterval = 0
     private var player : Player?
     private var playerBase : Base?
     private var interactionTime : TimeInterval = 0
-    
+
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
         self.player = Player.init(imageNamed: "playerPlaceholder")
@@ -35,17 +37,35 @@ class GameScene: SKScene {
         self.addChild(self.player!)
 
         self.playerBase = Base.init()
-        self.playerBase?.createBase(baseHealth: 50)
+        self.playerBase?.createBase(baseHealth: 50, baseSize: 50)
         self.playerBase?.position = CGPoint(x: 100, y: 0)
         self.addChild(self.playerBase!)
     
         self.gameCamera.contains(self.player!)
         self.camera = self.gameCamera
         self.gameCamera.position = player!.position
-        self.addChild(self.gameCamera)
+
+        self.loadStars()
+    }
+
+    func loadStars() {
+        guard let appDelegate = NSApplication.shared().delegate as? AppDelegate else {
+            return
+        }
+
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let starFetch = Star.fetchRequestStar()
+        managedContext.perform {
+            self.stars = try! starFetch.execute()
+            for star in self.stars {
+                star.addStarToScene(scene: self)
+            }
+        }
     }
     
-    func touchDown(atPoint pos : CGPoint) {}
+    func touchDown(atPoint pos : CGPoint) {
+        createStar(position: pos)
+    }
     
     func touchMoved(toPoint pos : CGPoint) {}
     
@@ -123,4 +143,33 @@ class GameScene: SKScene {
             }
         }
     }
+
+    func createStar() {
+        let randomPosition = self.randomPositionInUniverse()
+        self.createStar(position: randomPosition)
+    }
+
+    func createStar(position:CGPoint) {
+        let appDelegate = NSApplication.shared().delegate as! AppDelegate
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let star = Star(entity: Star.entity(), insertInto: managedContext)
+        star.brightness = 10 + Float(drand48()) * 65.0
+        star.position = position as NSObject?
+        star.power = Int64(Float(1000.00) + (Float(drand48()) * 3000.0))
+        do {
+            try managedContext.save()
+        } catch {
+            let contextError = error as NSError
+            fatalError("Error: \(contextError), \(contextError.userInfo)")
+        }
+        appDelegate.saveContext()
+        star.addStarToScene(scene: self)
+    }
+
+    func randomPositionInUniverse() -> CGPoint {
+        let x = drand48() * 800
+        let y = drand48() * 800
+        return CGPoint(x: x, y: y)
+    }
+
 }

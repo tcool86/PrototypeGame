@@ -67,7 +67,7 @@ class Player : SKSpriteNode {
     }
 
     func special() {
-
+        
     }
 
 }
