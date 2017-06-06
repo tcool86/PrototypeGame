@@ -20,5 +20,6 @@ extension Star {
     @NSManaged public var power: Int64
     @NSManaged public var position: NSObject?
     @NSManaged public var name: String?
+    @NSManaged public var owner: NSObject?
 
 }

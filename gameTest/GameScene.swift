@@ -18,28 +18,28 @@ enum KeyPressed : UInt16 {
     case space = 49
 }
 
-class GameScene: SKScene {
-    
+class GameScene : SKScene, SKPhysicsContactDelegate {
+
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     var gameCamera : SKCameraNode = SKCameraNode()
     var stars = [Star]()
+    var starsInAura = [Base]()
     
     private var lastUpdateTime : TimeInterval = 0
     private var player : Player?
-    private var playerBase : Base?
+    private var bases : [Base]?
     private var interactionTime : TimeInterval = 0
 
     override func sceneDidLoad() {
+        self.view?.showsPhysics = true
+        self.physicsWorld.contactDelegate = self
+        
         self.lastUpdateTime = 0
         self.player = Player.init(imageNamed: "playerPlaceholder")
+        self.player?.initPlayer()
         self.player?.position = CGPoint(x: 100, y: 100)
         self.addChild(self.player!)
-
-        self.playerBase = Base.init()
-        self.playerBase?.createBase(baseHealth: 50, baseSize: 50)
-        self.playerBase?.position = CGPoint(x: 100, y: 0)
-        self.addChild(self.playerBase!)
     
         self.gameCamera.contains(self.player!)
         self.camera = self.gameCamera
@@ -84,20 +84,32 @@ class GameScene: SKScene {
     }
     
     override func keyDown(with event: NSEvent) {
-        switch event.keyCode {
-        case KeyPressed.up.rawValue:
+        let key = event.keyCode
+        if (key == KeyPressed.up.rawValue) {
             self.player?.fly(direction: .up)
-        case KeyPressed.down.rawValue:
+        }else if (key == KeyPressed.down.rawValue) {
             self.player?.fly(direction: .down)
-        case KeyPressed.left.rawValue:
+        }
+        if (key == KeyPressed.left.rawValue) {
             self.player?.fly(direction: .left)
-        case KeyPressed.right.rawValue:
+        }else if (key == KeyPressed.right.rawValue) {
             self.player?.fly(direction: .right)
-        case KeyPressed.space.rawValue:
+        }
+        if (key == KeyPressed.space.rawValue) {
             self.player?.special()
+        }
+    }
 
-            default:
-                print("keyDown: \(event.characters!) keyCode: \(event.keyCode)")
+    override func keyUp(with event: NSEvent) {
+        switch event.keyCode {
+        case KeyPressed.up.rawValue: break
+        case KeyPressed.down.rawValue: break
+        case KeyPressed.left.rawValue: break
+        case KeyPressed.right.rawValue: break
+        case KeyPressed.space.rawValue:
+            self.player?.disableSpecial()
+        default:
+            print("keyDown: \(event.characters!) keyCode: \(event.keyCode)")
         }
     }
     
@@ -116,32 +128,16 @@ class GameScene: SKScene {
         for entity in self.entities {
             entity.update(deltaTime: dt)
         }
-        handleBasePlayer(dt)
+
+        if (player?.isAuraActive())! {
+            for base in starsInAura {
+                base.reduceBaseHealth(amount: (self.player?.consumptionRate)! )
+            }
+        }
+
         self.gameCamera.position = player!.position
         
         self.lastUpdateTime = currentTime
-    }
-    
-    func handleBasePlayer(_ currentTime: TimeInterval) {
-        let playerPosition : CGPoint = (player?.position)!
-        let basePosition : CGPoint = (playerBase?.position)!
-        let baseSize : CGSize = CGSize(width: 300, height: 300)
-        let baseHitBox : CGRect = CGRect(x: basePosition.x - baseSize.width/2,
-                                         y: basePosition.y - baseSize.height/2,
-                                         width: baseSize.width,
-                                         height: baseSize.height)
-        
-        if (baseHitBox.contains(playerPosition)) {
-            interactionTime += currentTime
-            let distance = hypotf(Float(playerPosition.x - basePosition.x),
-                                  Float(playerPosition.y - basePosition.y))
-            let timeDiff = (distance/100) + 0.02
-            if (interactionTime > TimeInterval(timeDiff)) {
-                print("Distance \(distance)")
-                playerBase?.reduceBaseHealth(amount: 1)
-                interactionTime = 0
-            }
-        }
     }
 
     func createStar() {
@@ -172,4 +168,24 @@ class GameScene: SKScene {
         return CGPoint(x: x, y: y)
     }
 
+    func didBegin(_ contact: SKPhysicsContact) {
+        if (contact.bodyA.categoryBitMask == PhysicsCategory.PlayerAura
+            && contact.bodyB.categoryBitMask == PhysicsCategory.Star) {
+            print("in range")
+            let star = contact.bodyB.node as! Base
+            starsInAura.append(star)
+        }
+    }
+
+    func didEnd(_ contact: SKPhysicsContact) {
+        if (contact.bodyA.categoryBitMask == PhysicsCategory.PlayerAura
+            && contact.bodyB.categoryBitMask == PhysicsCategory.Star) {
+            print("out of range")
+            let star = contact.bodyB.node as! Base
+            if (starsInAura.contains(star)) {
+                let index = starsInAura.index(of: star)
+                starsInAura.remove(at: index!)
+            }
+        }
+    }
 }

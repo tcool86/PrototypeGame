@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF4F20C21EE620D400FFB859 /* Aura.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F20C11EE620D400FFB859 /* Aura.swift */; };
+		EF4F20C41EE6213E00FFB859 /* AuraParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = EF4F20C31EE6213E00FFB859 /* AuraParticle.sks */; };
+		EF4F20C61EE722C300FFB859 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F20C51EE722C300FFB859 /* Config.swift */; };
 		EFE930141EE1D154006896E6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE930131EE1D154006896E6 /* CoreData.framework */; };
 		EFE930171EE1D275006896E6 /* StarGameModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EFE930151EE1D275006896E6 /* StarGameModel.xcdatamodeld */; };
 		EFF4469A1EBCF4D900124B00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF446991EBCF4D900124B00 /* AppDelegate.swift */; };
@@ -33,6 +36,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EF4F20C11EE620D400FFB859 /* Aura.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Aura.swift; sourceTree = "<group>"; };
+		EF4F20C31EE6213E00FFB859 /* AuraParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = AuraParticle.sks; sourceTree = "<group>"; };
+		EF4F20C51EE722C300FFB859 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		EFE930131EE1D154006896E6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		EFE930161EE1D275006896E6 /* StarGameModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StarGameModel.xcdatamodel; sourceTree = "<group>"; };
 		EFF446961EBCF4D900124B00 /* gameTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gameTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +107,7 @@
 		EFF446981EBCF4D900124B00 /* gameTest */ = {
 			isa = PBXGroup;
 			children = (
+				EF4F20C51EE722C300FFB859 /* Config.swift */,
 				EFF446991EBCF4D900124B00 /* AppDelegate.swift */,
 				EFF4469B1EBCF4D900124B00 /* GameScene.sks */,
 				EFF4469F1EBCF4D900124B00 /* GameScene.swift */,
@@ -113,6 +120,8 @@
 				EFFB83E11EE4808D001DB35F /* Star.swift */,
 				EFFB83E21EE4808D001DB35F /* Star+CoreDataProperties.swift */,
 				EFE930151EE1D275006896E6 /* StarGameModel.xcdatamodeld */,
+				EF4F20C11EE620D400FFB859 /* Aura.swift */,
+				EF4F20C31EE6213E00FFB859 /* AuraParticle.sks */,
 			);
 			path = gameTest;
 			sourceTree = "<group>";
@@ -211,6 +220,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF4F20C41EE6213E00FFB859 /* AuraParticle.sks in Resources */,
 				EFF4469C1EBCF4D900124B00 /* GameScene.sks in Resources */,
 				EFF446A41EBCF4D900124B00 /* Assets.xcassets in Resources */,
 				EFF446A71EBCF4D900124B00 /* Main.storyboard in Resources */,
@@ -238,7 +248,9 @@
 				EFF446BF1EBFF3B600124B00 /* Base.swift in Sources */,
 				EFFB83E41EE4808D001DB35F /* Star+CoreDataProperties.swift in Sources */,
 				EFF446A01EBCF4D900124B00 /* GameScene.swift in Sources */,
+				EF4F20C61EE722C300FFB859 /* Config.swift in Sources */,
 				EFF4469A1EBCF4D900124B00 /* AppDelegate.swift in Sources */,
+				EF4F20C21EE620D400FFB859 /* Aura.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

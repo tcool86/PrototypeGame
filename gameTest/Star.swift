@@ -18,7 +18,7 @@ public class Star: NSManagedObject {
             return
         }
         let base : Base = Base.init()
-        base.createBase(baseHealth: Int(self.power), baseSize: Int(self.brightness))
+        base.createBase(baseHealth: CGFloat(Int(self.power)), baseSize: Int(self.brightness))
         base.position = self.position as! CGPoint
         scene.addChild(base)
     }

@@ -11,38 +11,61 @@ import SpriteKit
 
 class Base : SKSpriteNode {
 
-    var baseHealth : Int = 0
+    var health : CGFloat = 0
+    var maxHealth : CGFloat = 0
     var baseSize : Int = 0
     let nodeHealthDebugName : String = "baseHealthDebug"
+    var baseShape : SKShapeNode?
+    var baseConquered : SKShapeNode?
 
-    func createBase(baseHealth: Int, baseSize: Int) {
-        self.baseHealth = baseHealth
+    func createBase(baseHealth: CGFloat, baseSize: Int) {
+        self.maxHealth = baseHealth
+        self.health = baseHealth
         self.baseSize = baseSize
         drawBase()
     }
 
     func drawBase() {
-        let baseShape : SKShapeNode = SKShapeNode.init(circleOfRadius: CGFloat(baseSize))
-        baseShape.fillColor = .red
-        self.addChild(baseShape)
-        let baseHealthDebug : SKLabelNode = SKLabelNode.init(text: "Health: \(self.baseHealth)")
+        baseShape = SKShapeNode.init(circleOfRadius: CGFloat(baseSize))
+        baseShape?.fillColor = .gray
+        self.addChild(baseShape!)
+
+        baseConquered = SKShapeNode.init(circleOfRadius: CGFloat(1))
+        baseConquered?.fillColor = .blue
+        baseConquered?.strokeColor = .clear
+        baseConquered?.isHidden = true
+        self.addChild(baseConquered!)
+
+        let baseHealthDebug : SKLabelNode = SKLabelNode.init(text: "Health: \(self.health)")
         baseHealthDebug.position = CGPoint(x: 50, y: -50)
         baseHealthDebug.name = nodeHealthDebugName
         self.addChild(baseHealthDebug)
+
+        self.physicsBody = SKPhysicsBody.init(circleOfRadius: CGFloat(baseSize))
+        self.physicsBody?.affectedByGravity = false
+        self.physicsBody?.collisionBitMask = PhysicsCategory.Star
+        self.physicsBody?.categoryBitMask = PhysicsCategory.Star
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.Sensor
+        self.physicsBody?.pinned = true
     }
 
-    func reduceBaseHealth(amount: Int) {
-        var newHealth = baseHealth - amount
+    func reduceBaseHealth(amount: CGFloat) {
+        var newHealth = health - amount
         if (newHealth < 0) {
             newHealth = 0
+            self.baseShape?.fillColor = .blue
+            self.baseConquered?.isHidden = true
+        }else{
+            self.baseConquered?.isHidden = false
         }
-        baseHealth = newHealth
-        //Set off notification?
+        health = newHealth
         updateBaseHealth()
     }
     
     func updateBaseHealth() {
         let node = self.childNode(withName: nodeHealthDebugName) as! SKLabelNode
-        node.text = "Health: \(self.baseHealth)"
+        node.text = "Health: \(self.health)"
+        let amountConquered = (1.0 - self.health/self.maxHealth) * CGFloat(self.baseSize)
+        self.baseConquered?.setScale(amountConquered)
     }
 }

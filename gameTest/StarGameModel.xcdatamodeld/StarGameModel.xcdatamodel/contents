@@ -3,10 +3,11 @@
     <entity name="Star" representedClassName=".Star" syncable="YES">
         <attribute name="brightness" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="owner" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="position" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="power" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Star" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Star" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>
