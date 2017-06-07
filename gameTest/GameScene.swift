@@ -30,6 +30,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     private var player : Player?
     private var bases : [Base]?
     private var interactionTime : TimeInterval = 0
+    private var hud : HUD?
 
     override func sceneDidLoad() {
         self.view?.showsPhysics = true
@@ -46,6 +47,11 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         self.gameCamera.position = player!.position
 
         self.loadStars()
+
+        self.hud = HUD.init(scene:self)
+        self.player?.energyBarRef = self.hud?.energyBar
+        self.gameCamera.addChild(self.hud!)
+        self.addChild(self.gameCamera)
     }
 
     func loadStars() {
@@ -136,7 +142,6 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         }
 
         self.gameCamera.position = player!.position
-        
         self.lastUpdateTime = currentTime
     }
 

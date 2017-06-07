@@ -21,8 +21,11 @@ class Player : SKSpriteNode {
 
     var aura : Aura?
     var flightSpeed : CGFloat = 150.0
-    var energy : CGFloat = 20.0
-    var consumptionRate : CGFloat = 10.0
+    var energy : CGFloat = 2000.0
+    var maxEnergy : CGFloat = 2000.0
+    var consumptionRate : CGFloat = 100.0
+
+    var energyBarRef : EnergyBar?
 
     func initPlayer() {
         aura = Aura()
@@ -74,7 +77,13 @@ class Player : SKSpriteNode {
     }
 
     func special() {
-        aura!.activate()
+        if (energy > 0) {
+            aura!.activate()
+            self.energy -= consumptionRate
+            energyBarRef?.updateEnergyBar(energy: self.energy, maxEnergy: self.maxEnergy)
+        }else{
+            aura!.deactivate()
+        }
     }
 
     func disableSpecial() {

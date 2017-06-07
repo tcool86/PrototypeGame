@@ -14,3 +14,10 @@ struct PhysicsCategory {
     static let Star: UInt32 = 2
     static let Sensor: UInt32 = 3
 }
+
+struct CameraLayer {
+    static let Background: CGFloat = -1.0
+    static let Playground: CGFloat = 0.0
+    static let Foreground: CGFloat = 1.0
+    static let HUD: CGFloat = 2.0
+}
