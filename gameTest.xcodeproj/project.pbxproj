@@ -13,6 +13,7 @@
 		EF4F20C81EE791C100FFB859 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F20C71EE791C100FFB859 /* HUD.swift */; };
 		EF4F20CB1EE8611500FFB859 /* EnergyStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F20CA1EE8611500FFB859 /* EnergyStar.swift */; };
 		EF4F20CD1EE873EB00FFB859 /* EnergyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F20CC1EE873EB00FFB859 /* EnergyBar.swift */; };
+		EF4F20CF1EE8EE4000FFB859 /* MiniMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F20CE1EE8EE4000FFB859 /* MiniMap.swift */; };
 		EFE930141EE1D154006896E6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE930131EE1D154006896E6 /* CoreData.framework */; };
 		EFE930171EE1D275006896E6 /* StarGameModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EFE930151EE1D275006896E6 /* StarGameModel.xcdatamodeld */; };
 		EFF4469A1EBCF4D900124B00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF446991EBCF4D900124B00 /* AppDelegate.swift */; };
@@ -45,6 +46,7 @@
 		EF4F20C71EE791C100FFB859 /* HUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		EF4F20CA1EE8611500FFB859 /* EnergyStar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyStar.swift; sourceTree = "<group>"; };
 		EF4F20CC1EE873EB00FFB859 /* EnergyBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyBar.swift; sourceTree = "<group>"; };
+		EF4F20CE1EE8EE4000FFB859 /* MiniMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniMap.swift; sourceTree = "<group>"; };
 		EFE930131EE1D154006896E6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		EFE930161EE1D275006896E6 /* StarGameModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StarGameModel.xcdatamodel; sourceTree = "<group>"; };
 		EFF446961EBCF4D900124B00 /* gameTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gameTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +90,7 @@
 			children = (
 				EF4F20C71EE791C100FFB859 /* HUD.swift */,
 				EF4F20CC1EE873EB00FFB859 /* EnergyBar.swift */,
+				EF4F20CE1EE8EE4000FFB859 /* MiniMap.swift */,
 			);
 			name = HUD;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				EFE930171EE1D275006896E6 /* StarGameModel.xcdatamodeld in Sources */,
 				EFF446A21EBCF4D900124B00 /* ViewController.swift in Sources */,
 				EFF446BF1EBFF3B600124B00 /* Base.swift in Sources */,
+				EF4F20CF1EE8EE4000FFB859 /* MiniMap.swift in Sources */,
 				EFFB83E41EE4808D001DB35F /* Star+CoreDataProperties.swift in Sources */,
 				EF4F20CD1EE873EB00FFB859 /* EnergyBar.swift in Sources */,
 				EF4F20C81EE791C100FFB859 /* HUD.swift in Sources */,

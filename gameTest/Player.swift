@@ -34,6 +34,9 @@ class Player : SKSpriteNode {
     }
 
     func fly(direction: FlightDirection) {
+        if (self.isAuraActive()) {
+            return
+        }
         var fly : SKAction
         switch direction {
         case .up:

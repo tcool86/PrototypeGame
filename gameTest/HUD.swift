@@ -11,7 +11,7 @@ import SpriteKit
 class HUD : SKNode {
 
     public var energyBar : EnergyBar = EnergyBar.init()
-    public var miniMap : SKShapeNode = SKShapeNode.init(rect: CGRect(x: 0, y: 0, width: 156, height: 156))
+    public var miniMap : MiniMap = MiniMap.init()
 
     var sceneOrigin : CGPoint = CGPoint(x: 0, y: 0)
     var sceneSize : CGSize = CGSize(width: 0, height: 0)
