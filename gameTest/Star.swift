@@ -11,7 +11,7 @@ import SpriteKit
 import GameplayKit
 import CoreData
 
-public class Star: NSManagedObject {
+public class Star: NSManagedObject, MiniMapItem {
 
     func addStarToScene(scene:SKScene){
         guard self.position != nil else {
@@ -21,5 +21,11 @@ public class Star: NSManagedObject {
         base.createBase(baseHealth: CGFloat(Int(self.power)), baseSize: Int(self.brightness))
         base.position = self.position as! CGPoint
         scene.addChild(base)
+    }
+
+    func itemForMiniMap() -> MiniMapIcon {
+        let itemLocation : CGPoint = self.position as! CGPoint
+        let type = MiniMapIconType.star
+        return MiniMapIcon(position: itemLocation, type: type, color: .gray)
     }
 }

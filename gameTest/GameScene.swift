@@ -46,12 +46,12 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         self.camera = self.gameCamera
         self.gameCamera.position = player!.position
 
-        self.loadStars()
-
         self.hud = HUD.init(scene:self)
         self.player?.energyBarRef = self.hud?.energyBar
         self.gameCamera.addChild(self.hud!)
         self.addChild(self.gameCamera)
+
+        self.loadStars()
     }
 
     func loadStars() {
@@ -65,7 +65,9 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
             self.stars = try! starFetch.execute()
             for star in self.stars {
                 star.addStarToScene(scene: self)
+                self.hud?.miniMap.addItem(item: star)
             }
+            self.hud?.miniMap.updateMap()
         }
     }
     

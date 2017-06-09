@@ -21,3 +21,7 @@ struct CameraLayer {
     static let Foreground: CGFloat = 1.0
     static let HUD: CGFloat = 2.0
 }
+
+struct DebugConfig {
+    static let MiniMapDebug : Bool = false
+}
