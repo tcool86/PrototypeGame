@@ -25,7 +25,8 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     var gameCamera : SKCameraNode = SKCameraNode()
     var stars = [Star]()
     var starsInAura = [Base]()
-    
+
+    private var slowTimer : TimeInterval = 0
     private var lastUpdateTime : TimeInterval = 0
     private var player : Player?
     private var bases : [Base]?
@@ -137,13 +138,21 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
             entity.update(deltaTime: dt)
         }
 
+        self.gameCamera.position = player!.position
+
+        //Player aura should be behind timer as well
         if (player?.isAuraActive())! {
             for base in starsInAura {
                 base.reduceBaseHealth(amount: (self.player?.consumptionRate)! )
             }
         }
+        //Update map at slower interval to keep frame rate at 60
+        if (slowTimer > 0.08) {
+            self.hud?.miniMap.updatePlayerIcon(playerPosition: player!.position)
+            slowTimer = 0
+        }
 
-        self.gameCamera.position = player!.position
+        slowTimer += dt
         self.lastUpdateTime = currentTime
     }
 

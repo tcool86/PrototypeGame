@@ -9,7 +9,7 @@
 import SpriteKit
 
 enum MiniMapIconType {
-    case star, energy
+    case star, energy, player
 }
 
 struct MiniMapIcon {
@@ -41,7 +41,7 @@ protocol MiniMapItem {
     func itemForMiniMap() -> MiniMapIcon
 }
 
-class MiniMap : SKShapeNode {
+class MiniMap : SKNode {
 
     static var miniMapWidth : CGFloat = 154.0
     static var miniMapHeight : CGFloat = 154.0
@@ -51,17 +51,38 @@ class MiniMap : SKShapeNode {
     static var mapBottomRight : CGPoint = CGPoint(x: 0, y: 0)
 
     var pointData : [MiniMapIcon] = []
-    var pointsLayer : SKShapeNode?
+    var pointsLayer : [SKShapeNode] = []
+    var playerNode : SKShapeNode = SKShapeNode.init(circleOfRadius: 2.0)
+    var croppedNode : SKCropNode?
+    var mask : SKShapeNode?
+    var background : SKShapeNode?
 
     override init() {
         super.init()
         let miniMapBounds = CGRect(x: 0, y: 0,
                                    width: MiniMap.miniMapWidth,
                                    height: MiniMap.miniMapHeight)
-        self.path = CGPath(rect: miniMapBounds, transform: nil)
+        let maskPath : CGPath = CGPath(rect: miniMapBounds, transform: nil)
+        self.mask = SKShapeNode.init(path: maskPath)
+        self.mask?.fillColor = .white
+
+        self.croppedNode = SKCropNode.init()
+        self.croppedNode?.maskNode = mask
+        self.addChild(self.croppedNode!)
+        self.playerNode.fillColor = .blue
+        self.croppedNode?.addChild(self.playerNode)
+        //self.addChild(self.playerNode)
+
+        self.background = SKShapeNode.init(path: maskPath)
+        self.background?.fillColor = NSColor.init(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
+        self.background?.strokeColor = .white
+        self.addChild(self.background!)
+
         let initialMap = drawMap()
-        self.pointsLayer = SKShapeNode.init(path: initialMap)
-        self.addChild(self.pointsLayer!)
+        self.pointsLayer.append(SKShapeNode.init(path: initialMap))
+        self.pointsLayer.append(SKShapeNode.init())
+        self.addChild(self.pointsLayer[0])
+        self.addChild(self.pointsLayer[1])
     }
 
     func updateMap(dataPoints: [MiniMapIcon]) {
@@ -71,7 +92,7 @@ class MiniMap : SKShapeNode {
 
     func updateMap() {
         let updatedMap = drawMap()
-        self.pointsLayer?.path = updatedMap
+        self.pointsLayer[0].path = updatedMap
         if (DebugConfig.MiniMapDebug) {
             self.debug()
         }
@@ -87,6 +108,13 @@ class MiniMap : SKShapeNode {
             mapPath.addEllipse(in: pos)
         }
         return mapPath
+    }
+
+    func updatePlayerIcon(playerPosition: CGPoint) {
+        let playerIcon : MiniMapIcon = MiniMapIcon.init(position: playerPosition,
+                                                        type: MiniMapIconType.player,
+                                                        color: .blue)
+        self.playerNode.position = playerIcon.normalizePoint()
     }
 
     required init?(coder aDecoder: NSCoder) {

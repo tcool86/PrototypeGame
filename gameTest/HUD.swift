@@ -56,8 +56,6 @@ class HUD : SKNode {
     func setupMiniMap() {
         let miniMapPosition = CGPoint(x: screenLeft,
                                       y: screenBottom)
-        self.miniMap.fillColor = NSColor.init(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
-        self.miniMap.strokeColor = .white
         self.miniMap.position = miniMapPosition
         self.addChild(miniMap)
     }
