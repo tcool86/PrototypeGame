@@ -20,6 +20,7 @@ enum FlightDirection : String {
 class Player : SKSpriteNode {
 
     var aura : Aura?
+    var blast : Blast?
     var flightSpeed : CGFloat = 150.0
     var energy : CGFloat = 2000.0
     var maxEnergy : CGFloat = 2000.0
@@ -31,6 +32,10 @@ class Player : SKSpriteNode {
         aura = Aura()
         self.addChild(aura!)
         aura!.position = CGPoint(x:0,y:0)
+
+        blast = Blast()
+        self.addChild(blast!)
+        blast!.position = CGPoint(x:0,y:0)
     }
 
     func fly(direction: FlightDirection) {
@@ -89,8 +94,17 @@ class Player : SKSpriteNode {
         }
     }
 
+    func blast(direction:FlightDirection) {
+        if (energy > 0) {
+            blast?.activate(direction)
+        }else{
+            blast!.deactivate()
+        }
+    }
+
     func disableSpecial() {
         aura!.deactivate()
+        blast!.deactivate()
     }
 
     func isAuraActive() -> Bool {

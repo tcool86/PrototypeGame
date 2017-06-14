@@ -11,8 +11,9 @@ import Foundation
 struct PhysicsCategory {
     static let NoCollision: UInt32 = 0
     static let PlayerAura: UInt32 = 1
-    static let Star: UInt32 = 2
-    static let Sensor: UInt32 = 3
+    static let PlayerBlast: UInt32 = 2
+    static let Star: UInt32 = 3
+    static let Sensor: UInt32 = 4
 }
 
 struct CameraLayer {

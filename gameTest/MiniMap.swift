@@ -46,6 +46,7 @@ class MiniMap : SKNode {
     static var miniMapWidth : CGFloat = 154.0
     static var miniMapHeight : CGFloat = 154.0
 
+    //Map could be separated into it's own class
     static var mapSize = CGSize(width: 0, height: 0)
     static var mapTopLeft : CGPoint = CGPoint(x: 0, y: 0)
     static var mapBottomRight : CGPoint = CGPoint(x: 0, y: 0)

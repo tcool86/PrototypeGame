@@ -11,11 +11,14 @@ import GameplayKit
 import Foundation
 
 enum KeyPressed : UInt16 {
-    case up    = 126
-    case down  = 125
-    case left  = 123
-    case right = 124
-    case space = 49
+    case up       = 126
+    case down     = 125
+    case left     = 123
+    case right    = 124
+    case special  = 49
+    case melee    = 6
+    case teleport = 7
+    case attack   = 8
 }
 
 class GameScene : SKScene, SKPhysicsContactDelegate {
@@ -26,12 +29,14 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     var stars = [Star]()
     var starsInAura = [Base]()
 
-    private var slowTimer : TimeInterval = 0
+    private var miniMapUpdate : TimeInterval = 0
     private var lastUpdateTime : TimeInterval = 0
     private var player : Player?
     private var bases : [Base]?
     private var interactionTime : TimeInterval = 0
     private var hud : HUD?
+    private var previousMove : UInt16 = 0
+    private var previousMoveHeld : Bool = false
 
     override func sceneDidLoad() {
         self.view?.showsPhysics = true
@@ -104,8 +109,48 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         }else if (key == KeyPressed.right.rawValue) {
             self.player?.fly(direction: .right)
         }
-        if (key == KeyPressed.space.rawValue) {
+        if (key == KeyPressed.special.rawValue) {
             self.player?.special()
+        }
+        if (key == KeyPressed.attack.rawValue) {
+            print("attack")
+            player?.blast(direction: getPreviousDirection(key: previousMove))
+        }
+        if (key == KeyPressed.melee.rawValue) {
+            print("melee")
+        }
+        if (key == KeyPressed.teleport.rawValue && isDirectional(key: previousMove)) {
+            print("teleport")
+        }
+        previousMove = key
+        previousMoveHeld = true
+        if (event.isARepeat) {
+
+        }
+    }
+
+    func isDirectional(key: UInt16) -> Bool {
+        if (previousMoveHeld == false) {
+            return false
+        }
+        return (key == KeyPressed.up.rawValue ||
+                key == KeyPressed.down.rawValue ||
+                key == KeyPressed.right.rawValue ||
+                key == KeyPressed.left.rawValue)
+    }
+
+    func getPreviousDirection(key: UInt16) -> FlightDirection {
+        switch key {
+        case KeyPressed.up.rawValue:
+            return FlightDirection.up
+        case KeyPressed.down.rawValue:
+            return FlightDirection.down
+        case KeyPressed.right.rawValue:
+            return FlightDirection.right
+        case KeyPressed.left.rawValue:
+            return FlightDirection.left
+        default:
+            return FlightDirection.idle
         }
     }
 
@@ -115,10 +160,15 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
         case KeyPressed.down.rawValue: break
         case KeyPressed.left.rawValue: break
         case KeyPressed.right.rawValue: break
-        case KeyPressed.space.rawValue:
+        case KeyPressed.special.rawValue:
+            self.player?.disableSpecial()
+        case KeyPressed.attack.rawValue:
             self.player?.disableSpecial()
         default:
             print("keyDown: \(event.characters!) keyCode: \(event.keyCode)")
+        }
+        if (previousMove == event.keyCode) {
+            previousMoveHeld = false
         }
     }
     
@@ -146,14 +196,40 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
                 base.reduceBaseHealth(amount: (self.player?.consumptionRate)! )
             }
         }
+        self.updateMiniMap(dt: dt)
+        self.lastUpdateTime = currentTime
+        self.screenWrap()
+    }
+
+    func screenWrap() {
+        let buffer : CGFloat = (self.view?.bounds.width)!
+        let entranceBuffer : CGFloat = buffer/2
+        let playerX = (player?.position.x)!
+        let playerY = (player?.position.y)!
+        if (playerX < MiniMap.mapTopLeft.x - buffer) {
+            player?.position = CGPoint(x: MiniMap.mapBottomRight.x + entranceBuffer, y: playerY)
+            gameCamera.position = (player?.position)!
+        }else if (playerX > MiniMap.mapBottomRight.x + buffer) {
+            player?.position = CGPoint(x: MiniMap.mapTopLeft.x - entranceBuffer, y: playerY)
+            gameCamera.position = (player?.position)!
+        }
+        if (playerY > MiniMap.mapTopLeft.y + buffer) {
+            player?.position = CGPoint(x: playerX, y: MiniMap.mapBottomRight.y - entranceBuffer)
+            gameCamera.position = (player?.position)!
+        }else if (playerY < MiniMap.mapBottomRight.y - buffer) {
+            player?.position = CGPoint(x: playerX, y: MiniMap.mapTopLeft.y + entranceBuffer)
+            gameCamera.position = (player?.position)!
+        }
+    }
+
+    func updateMiniMap(dt: TimeInterval) {
         //Update map at slower interval to keep frame rate at 60
-        if (slowTimer > 0.08) {
+        if (miniMapUpdate > 0.08) {
             self.hud?.miniMap.updatePlayerIcon(playerPosition: player!.position)
-            slowTimer = 0
+            miniMapUpdate = 0
         }
 
-        slowTimer += dt
-        self.lastUpdateTime = currentTime
+        miniMapUpdate += dt
     }
 
     func createStar() {
@@ -187,7 +263,6 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         if (contact.bodyA.categoryBitMask == PhysicsCategory.PlayerAura
             && contact.bodyB.categoryBitMask == PhysicsCategory.Star) {
-            print("in range")
             let star = contact.bodyB.node as! Base
             starsInAura.append(star)
         }
@@ -196,7 +271,6 @@ class GameScene : SKScene, SKPhysicsContactDelegate {
     func didEnd(_ contact: SKPhysicsContact) {
         if (contact.bodyA.categoryBitMask == PhysicsCategory.PlayerAura
             && contact.bodyB.categoryBitMask == PhysicsCategory.Star) {
-            print("out of range")
             let star = contact.bodyB.node as! Base
             if (starsInAura.contains(star)) {
                 let index = starsInAura.index(of: star)

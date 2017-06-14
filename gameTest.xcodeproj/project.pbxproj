@@ -15,6 +15,8 @@
 		EF4F20CD1EE873EB00FFB859 /* EnergyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F20CC1EE873EB00FFB859 /* EnergyBar.swift */; };
 		EF4F20CF1EE8EE4000FFB859 /* MiniMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F20CE1EE8EE4000FFB859 /* MiniMap.swift */; };
 		EF6F6AED1EE9B60400A1A95C /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6F6AEC1EE9B60400A1A95C /* Utility.swift */; };
+		EF6F6AF11EEC9AA800A1A95C /* Blast.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6F6AF01EEC9AA800A1A95C /* Blast.swift */; };
+		EF6F6AF31EEC9ACF00A1A95C /* BlastParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = EF6F6AF21EEC9ACF00A1A95C /* BlastParticle.sks */; };
 		EFE930141EE1D154006896E6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE930131EE1D154006896E6 /* CoreData.framework */; };
 		EFE930171EE1D275006896E6 /* StarGameModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EFE930151EE1D275006896E6 /* StarGameModel.xcdatamodeld */; };
 		EFF4469A1EBCF4D900124B00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF446991EBCF4D900124B00 /* AppDelegate.swift */; };
@@ -49,6 +51,8 @@
 		EF4F20CC1EE873EB00FFB859 /* EnergyBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyBar.swift; sourceTree = "<group>"; };
 		EF4F20CE1EE8EE4000FFB859 /* MiniMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniMap.swift; sourceTree = "<group>"; };
 		EF6F6AEC1EE9B60400A1A95C /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		EF6F6AF01EEC9AA800A1A95C /* Blast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blast.swift; sourceTree = "<group>"; };
+		EF6F6AF21EEC9ACF00A1A95C /* BlastParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BlastParticle.sks; sourceTree = "<group>"; };
 		EFE930131EE1D154006896E6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		EFE930161EE1D275006896E6 /* StarGameModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StarGameModel.xcdatamodel; sourceTree = "<group>"; };
 		EFF446961EBCF4D900124B00 /* gameTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gameTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +101,26 @@
 			name = HUD;
 			sourceTree = "<group>";
 		};
+		EF6F6AEE1EEC9A7C00A1A95C /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				EF6F6AEF1EEC9A8A00A1A95C /* Actions */,
+				EFF446BC1EBCF59E00124B00 /* Player.swift */,
+			);
+			name = Player;
+			sourceTree = "<group>";
+		};
+		EF6F6AEF1EEC9A8A00A1A95C /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				EF4F20C11EE620D400FFB859 /* Aura.swift */,
+				EF4F20C31EE6213E00FFB859 /* AuraParticle.sks */,
+				EF6F6AF01EEC9AA800A1A95C /* Blast.swift */,
+				EF6F6AF21EEC9ACF00A1A95C /* BlastParticle.sks */,
+			);
+			name = Actions;
+			sourceTree = "<group>";
+		};
 		EFE930121EE1D154006896E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +151,7 @@
 		EFF446981EBCF4D900124B00 /* gameTest */ = {
 			isa = PBXGroup;
 			children = (
+				EF6F6AEE1EEC9A7C00A1A95C /* Player */,
 				EF4F20C51EE722C300FFB859 /* Config.swift */,
 				EFF446991EBCF4D900124B00 /* AppDelegate.swift */,
 				EFF4469B1EBCF4D900124B00 /* GameScene.sks */,
@@ -135,13 +160,10 @@
 				EFF446A31EBCF4D900124B00 /* Assets.xcassets */,
 				EFF446A51EBCF4D900124B00 /* Main.storyboard */,
 				EFF446A81EBCF4D900124B00 /* Info.plist */,
-				EFF446BC1EBCF59E00124B00 /* Player.swift */,
 				EFF446BE1EBFF3B600124B00 /* Base.swift */,
 				EFFB83E11EE4808D001DB35F /* Star.swift */,
 				EFFB83E21EE4808D001DB35F /* Star+CoreDataProperties.swift */,
 				EFE930151EE1D275006896E6 /* StarGameModel.xcdatamodeld */,
-				EF4F20C11EE620D400FFB859 /* Aura.swift */,
-				EF4F20C31EE6213E00FFB859 /* AuraParticle.sks */,
 				EF4F20C91EE79D3B00FFB859 /* HUD */,
 				EF4F20CA1EE8611500FFB859 /* EnergyStar.swift */,
 				EF6F6AEC1EE9B60400A1A95C /* Utility.swift */,
@@ -246,6 +268,7 @@
 				EF4F20C41EE6213E00FFB859 /* AuraParticle.sks in Resources */,
 				EFF4469C1EBCF4D900124B00 /* GameScene.sks in Resources */,
 				EFF446A41EBCF4D900124B00 /* Assets.xcassets in Resources */,
+				EF6F6AF31EEC9ACF00A1A95C /* BlastParticle.sks in Resources */,
 				EFF446A71EBCF4D900124B00 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,6 +299,7 @@
 				EF4F20C81EE791C100FFB859 /* HUD.swift in Sources */,
 				EF4F20CB1EE8611500FFB859 /* EnergyStar.swift in Sources */,
 				EFF446A01EBCF4D900124B00 /* GameScene.swift in Sources */,
+				EF6F6AF11EEC9AA800A1A95C /* Blast.swift in Sources */,
 				EF4F20C61EE722C300FFB859 /* Config.swift in Sources */,
 				EFF4469A1EBCF4D900124B00 /* AppDelegate.swift in Sources */,
 				EF4F20C21EE620D400FFB859 /* Aura.swift in Sources */,
