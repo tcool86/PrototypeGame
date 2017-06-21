@@ -36,9 +36,9 @@ class Blast : SKShapeNode {
         self.fillColor = NSColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.4)
         self.physicsBody = SKPhysicsBody.init(polygonFrom: self.path!)
         self.physicsBody?.affectedByGravity = false
-        self.physicsBody?.collisionBitMask = PhysicsCategory.NoCollision
+        self.physicsBody?.collisionBitMask = PhysicsCategory.Sensor
         self.physicsBody?.categoryBitMask = PhysicsCategory.PlayerBlast
-        self.physicsBody?.contactTestBitMask = PhysicsCategory.Sensor
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.PlayerBlast
     }
 
     required init?(coder aDecoder: NSCoder) {

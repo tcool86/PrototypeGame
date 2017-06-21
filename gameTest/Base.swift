@@ -43,9 +43,9 @@ class Base : SKSpriteNode {
 
         self.physicsBody = SKPhysicsBody.init(circleOfRadius: CGFloat(baseSize))
         self.physicsBody?.affectedByGravity = false
-        self.physicsBody?.collisionBitMask = PhysicsCategory.Star
+        self.physicsBody?.collisionBitMask = PhysicsCategory.Sensor
         self.physicsBody?.categoryBitMask = PhysicsCategory.Star
-        self.physicsBody?.contactTestBitMask = PhysicsCategory.Sensor
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.Star
         self.physicsBody?.pinned = true
     }
 
