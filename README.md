@@ -17,7 +17,7 @@ The game uses CoreData to store information about the map. In this prototype, yo
 
 ### Player
 
-The player moves around the map in four directions using the arrow keys. By pressing space-bar, you can activate the player's "aura" (SpriteKit particle effects) to capture a base. Bases within the capture range will begin depleting in health. Once a bases' health is 0, the base is captured.
+The player moves around the map in four directions using the arrow keys. By pressing space-bar, you can activate the player's "aura" (SpriteKit particle effects) to capture a base. While the player aura is activated, energy is used, and the health of bases within the capture range will decrease. Once a base health is 0, the base is captured.
 
 ![Capturing bases](https://github.com/tcool86/PrototypeGame/blob/master/Screens/capture-stars.gif)
 
