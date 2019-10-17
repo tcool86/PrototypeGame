@@ -1,7 +1,7 @@
 # PrototypeGame
 
 A small prototype of a game for MacOSX.
-I built this prototype mostly during some PTO to help practice Swift and learn Apple's SpriteKit.
+I built this prototype mostly during a vacation to help practice Swift and learn Apple's SpriteKit.
 
 ## Concept
 
