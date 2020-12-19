@@ -25,6 +25,7 @@ The player moves around the map in four directions using the arrow keys. By pres
 
 Written in Swift v3.2 using Xcode 9, and deployed initially to MacOSX 10.12 (Sierra)
 
-I'm no longer developing this project, but the concept has carried over to another project I'm creating using the [Unity](https://unity3d.com/) game engine.
+Update 12/18/2020: 
+I'm no longer developing this project, but the concept has carried over to another project I'm creating using web technologies (BabylonJS)
 
 I'll eventually post more details on my website: [timcool.me](https://www.timcool.me)
